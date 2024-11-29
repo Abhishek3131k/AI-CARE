@@ -69,6 +69,11 @@ if file_uploaded:
             # Call llmware model to summarize the analysis response
             summary_response = llm_model.function_call(response.text, function="summarize", params=["summary points (5)"])
 
-            # Display the summarized content
-            st.title('Summary of the Analysis')
-            st.write(summary_response)
+            # Assuming summary_response is a dictionary with a key "llm_response" containing a list of points
+            if "llm_response" in summary_response:
+                st.title('Summary of the Analysis')
+                # Loop through the summary response list and display each point
+                for i, point in enumerate(summary_response["llm_response"]):
+                    st.write(f"{i+1}. {point}")
+            else:
+                st.write("No summary available.")
